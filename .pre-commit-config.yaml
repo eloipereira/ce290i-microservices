@@ -1,0 +1,58 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+default_stages: [commit, push]
+default_language_version:
+    python: python3
+repos:
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v3.9.0
+    hooks:
+      - id: reorder-python-imports
+        name: Reorder Python imports
+        args: ["--application-directories=.:.api:.app"]
+-   repo: https://github.com/mwouts/jupytext
+    rev: v1.13.8
+    hooks:
+    -   id: jupytext
+        args: [--sync, --pipe, black]
+        additional_dependencies:
+        -   black==22.3.0
+-   repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+    -   id: black
+-   repo: https://github.com/pycqa/flake8.git
+    rev: 5.0.4
+    hooks:
+    -   id: flake8
+        args: # arguments to configure flake8
+        -   "--max-line-length=88"
+        -   "--ignore=E203,E266,E501,W503,W605,F403,F401,E402"
+-   repo: https://github.com/PyCQA/autoflake
+    rev: v2.2.0
+    hooks:
+    -   id: autoflake
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+    -   id: check-ast
+    -   id: check-merge-conflict
+-   repo: https://github.com/hadolint/hadolint.git
+    rev: v2.8.0
+    hooks:
+      - id: hadolint-docker
+        entry: hadolint/hadolint:v2.8.0 hadolint
+        args: ["--ignore=DL3007","--ignore=DL3008", "--ignore=DL3018", "--ignore=DL4006"]
+- repo: local
+  hooks:
+  - id: run_tests
+    language: script
+    name: Run tests
+    entry: ./run_tests.sh
+    always_run: true
+    pass_filenames: false
+    stage: [commit]
