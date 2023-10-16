@@ -26,4 +26,6 @@ services:
       - REDIS_PORT=6379
     ports:
       - '8000:8000'
+    depends_on:
+      - data_player
     restart: "no"
