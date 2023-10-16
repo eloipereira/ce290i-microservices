@@ -23,7 +23,9 @@ def gps_generator_from_csv(csv_path: str) -> Generator[GPS, Any, Any]:
         logging.error(msg=f"IO Error: {e}")
 
 
-def replay_from_csv_to_redis(csv_path: str, redis: redis.Redis, loop_back: bool = True):
+def replay_gps_from_csv_to_redis(
+    csv_path: str, redis: redis.Redis, loop_back: bool = True
+):
     gps_gen = gps_generator_from_csv(csv_path=csv_path)
     for g in gps_gen:
         time.sleep(g.elapsed_time_seconds)
