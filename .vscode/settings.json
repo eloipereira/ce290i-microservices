@@ -1,0 +1,28 @@
+{
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "cSpell.words": [],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.linting.flake8Args": [
+        "--ignore=E203,E266,E501,W503,W605,F403,F401,E402",
+        "--max-line-length=88"
+    ],
+    "python.formatting.provider": "black",
+    "isort.args": [
+        "--profile",
+        "black",
+        "--skip-gitignore",
+        "--line-length",
+        "88",
+        "--force_single_line",
+        "true"
+    ],
+    "python.analysis.typeCheckingMode": "off"
+}

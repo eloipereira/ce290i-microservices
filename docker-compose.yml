@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  data_player:
+    build:
+      context: .
+      dockerfile: ./dockerfile.data_player
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+  redis:
+    image: redis:latest
+    command: redis-server
+    restart: always
+    ports:
+      - "6379:6379"

@@ -1,0 +1,12 @@
+FROM python:3.12.0-slim
+
+WORKDIR /code
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+RUN mkdir -p /code/data
+COPY data/dataset_gps.csv /code/data/dataset_gps.csv
+COPY data_layer data_layer
+COPY scripts/replay_to_redis.py /code/replay_to_redis.py
+ENV PYTHONPATH=${PYTHONPATH}:${PWD}
+
+CMD ["python", "replay_to_redis.py"]
