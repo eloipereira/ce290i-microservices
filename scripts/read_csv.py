@@ -1,5 +1,4 @@
-from data_layer.gps import gps_generator_from_csv
-from data_layer.gps import replay_gps_from_csv_to_redis
+from gps_replay.ingestors import gps_generator_from_csv
 
 data = gps_generator_from_csv("data/dataset_gps.csv")
 print(next(data))

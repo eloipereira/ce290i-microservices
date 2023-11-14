@@ -5,8 +5,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir -p /code/data
 COPY data/dataset_gps.csv /code/data/dataset_gps.csv
-COPY data_layer data_layer
-COPY scripts/replay_to_redis.py /code/replay_to_redis.py
+COPY gps_replay gps_replay
+COPY scripts/replay_and_print.py /code/replay_and_print.py
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
-CMD ["python", "replay_to_redis.py"]
+CMD ["python", "replay_and_print.py"]

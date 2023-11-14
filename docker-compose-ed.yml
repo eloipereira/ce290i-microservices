@@ -4,7 +4,7 @@ services:
   data_player:
     build:
       context: .
-      dockerfile: ./dockerfile.data_player
+      dockerfile: ./dockerfile.replayer_pub
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -16,16 +16,16 @@ services:
     restart: always
     ports:
       - "6379:6379"
-  api:
+  app:
     build:
       context: .
-      dockerfile: ./dockerfile.api
-    container_name: vehicle-data-api
+      dockerfile: ./dockerfile.app
+      args:
+        - DATA_SOURCE=pub_sub
+    ports:
+      - '8501:8501'
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-    ports:
-      - '8000:8000'
     depends_on:
       - data_player
-    restart: "no"

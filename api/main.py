@@ -8,8 +8,8 @@ from fastapi import BackgroundTasks
 from fastapi import Depends
 from fastapi import FastAPI
 
-from data_layer.config import RedisConfig
-from data_layer.models import GPS
+from gps_replay.config import RedisConfig
+from gps_replay.models import GPS
 
 cfg = RedisConfig()
 
@@ -26,8 +26,9 @@ api = FastAPI(title="Vehicle Data API")
 
 
 @api.get("/gps_state")
-def get_gps_state_from_redis(redis_db=Depends(get_redis_db)):
-    return redis_db.get("gps_state")
+def get_gps_state_from_redis(redis_db=Depends(get_redis_db)) -> GPS:
+    gps = redis_db.get("gps_state")
+    return GPS(**json.loads(gps))
 
 
 @api.get("/compute_avg_speed")
