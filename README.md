@@ -32,16 +32,6 @@ eloi@gocariq.com
 - [Docker Engine](https://docs.docker.com/engine/install/)
 - A command line interface (e.g. bash, terminal)
 
-
-# Installation and execution
-
-- Clone the git repo
-  - [https://github.com/eloipereira/ce290i-microservices](https://github.com/eloipereira/ce290i-microservices)
-- From your favorite CLI:
-- Run `docker-compose up -d` to build and turn on the microservices
-- Run `docker-compose down`  to turn them off
-
-
 # Programming Language
 
 Python
@@ -70,7 +60,14 @@ Redis
 - Pre-commit
 - Marp to build this presentation
 
+# Build and run
 
-# REST API
+- Clone the git repo
+  - [https://github.com/eloipereira/ce290i-microservices](https://github.com/eloipereira/ce290i-microservices)
+- From your favorite CLI:
+- Run `docker compose -f docker-compose-ed.yml up` (Event-Driven) or
+- Run `docker compose -f docker-compose-rest.yml up` (REST)
+- Run `docker compose down` to bring the services down
 
+# For the REST build
 - Access the Swagger API documentation at [http://localhost:8000/docs](http://localhost:8000/docs)
