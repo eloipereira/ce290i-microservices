@@ -4,7 +4,9 @@ services:
   replayer:
     build:
       context: .
-      dockerfile: ./dockerfile.replayer_cached
+      dockerfile: ./dockerfile.replayer
+      args:
+        - SERVICE_TYPE=cached
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379

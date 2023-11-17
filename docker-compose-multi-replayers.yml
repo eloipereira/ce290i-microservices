@@ -4,16 +4,24 @@ services:
   replayer_0:
     build:
       context: .
-      dockerfile: ./dockerfile.replayer_print
+      dockerfile: ./dockerfile.replayer
+      args:
+        - SERVICE_TYPE=print
   replayer_1:
     build:
       context: .
-      dockerfile: ./dockerfile.replayer_print
+      dockerfile: ./dockerfile.replayer
+      args:
+        - SERVICE_TYPE=print
   replayer_2:
     build:
       context: .
-      dockerfile: ./dockerfile.replayer_print
+      dockerfile: ./dockerfile.replayer
+      args:
+        - SERVICE_TYPE=print
   replayer_3:
     build:
       context: .
-      dockerfile: ./dockerfile.replayer_print
+      dockerfile: ./dockerfile.replayer
+      args:
+        - SERVICE_TYPE=print

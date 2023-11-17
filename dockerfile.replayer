@@ -1,0 +1,23 @@
+ARG SERVICE_TYPE
+
+FROM python:3.12.0-slim as base
+
+WORKDIR /code
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+RUN mkdir -p /code/data
+COPY data/dataset_gps.csv /code/data/dataset_gps.csv
+COPY gps_replay gps_replay
+
+FROM base as print_build
+COPY scripts/replay_and_print.py /code/replay.py
+
+FROM base as cached_build
+COPY scripts/replay_to_redis_cache.py /code/replay.py
+
+FROM base as pubsub_build
+COPY scripts/replay_to_redis_publisher.py /code/replay.py
+
+FROM ${SERVICE_TYPE}_build as final_build
+ENV PYTHONPATH=${PYTHONPATH}:${PWD}
+CMD ["python", "replay.py"]

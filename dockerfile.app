@@ -9,11 +9,12 @@ COPY gps_replay gps_replay
 RUN mkdir app
 COPY app/__init__.py app/__init__.py
 COPY app/config.py app/config.py
+COPY app/widgets.py app/widgets.py
 
 FROM base AS rest_build
 COPY app/main_rest.py app/main.py
 
-FROM base as pub_sub_build
+FROM base as pubsub_build
 COPY app/main_reactive.py app/main.py
 
 FROM ${DATA_SOURCE}_build AS final

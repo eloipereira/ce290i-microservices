@@ -4,7 +4,9 @@ services:
   data_player:
     build:
       context: .
-      dockerfile: ./dockerfile.replayer_pub
+      dockerfile: ./dockerfile.replayer
+      args:
+        - SERVICE_TYPE=pubsub
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -21,7 +23,7 @@ services:
       context: .
       dockerfile: ./dockerfile.app
       args:
-        - DATA_SOURCE=pub_sub
+        - DATA_SOURCE=pubsub
     ports:
       - '8501:8501'
     environment:
