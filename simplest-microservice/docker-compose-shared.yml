@@ -1,0 +1,49 @@
+services:
+  listener:
+    build:
+      context: .
+      dockerfile: dockerfile.listen_and_dump
+    container_name: listener
+    networks:
+      - my-network
+    volumes:
+      - shared-volume:/shared
+
+  publisher1:
+    build:
+      context: .
+      dockerfile: dockerfile.publisher
+    container_name: publisher1
+    networks:
+      - my-network
+    depends_on:
+      - listener
+
+  publisher2:
+    build:
+      context: .
+      dockerfile: dockerfile.publisher
+    container_name: publisher2
+    networks:
+      - my-network
+    depends_on:
+      - listener
+
+  reader:
+    build:
+      context: .
+      dockerfile: dockerfile.reader
+    container_name: reader
+    networks:
+      - my-network
+    volumes:
+      - shared-volume:/shared
+    depends_on:
+      - listener
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  shared-volume:

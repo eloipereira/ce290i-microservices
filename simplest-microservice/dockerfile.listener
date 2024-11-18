@@ -1,0 +1,7 @@
+# Listener Dockerfile
+FROM alpine:latest
+
+RUN apk add --no-cache socat
+
+# Listener Command: Start a listener on port 12345
+CMD ["sh", "-c", "socat -u TCP-LISTEN:12345,reuseaddr,fork -"]

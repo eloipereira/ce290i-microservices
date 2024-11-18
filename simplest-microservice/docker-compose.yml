@@ -1,0 +1,32 @@
+services:
+  listener:
+    build:
+      context: .
+      dockerfile: ./dockerfile.listener
+    container_name: listener
+    networks:
+      - my-network
+
+  publisher1:
+    build:
+      context: .
+      dockerfile: ./dockerfile.publisher
+    container_name: publisher1
+    networks:
+      - my-network
+    depends_on:
+      - listener
+
+  publisher2:
+    build:
+      context: .
+      dockerfile: ./dockerfile.publisher
+    container_name: publisher2
+    networks:
+      - my-network
+    depends_on:
+      - listener
+
+networks:
+  my-network:
+    driver: bridge

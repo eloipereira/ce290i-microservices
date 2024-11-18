@@ -1,0 +1,9 @@
+# Reader Dockerfile
+FROM alpine:latest
+
+# Install tail for monitoring
+RUN apk add --no-cache coreutils
+
+# Monitor the file and print new messages as they are added
+RUN mkdir shared
+CMD ["sh", "-c", "touch /shared/messages.log && tail -f /shared/messages.log"]

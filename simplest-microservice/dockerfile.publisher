@@ -1,0 +1,6 @@
+# Publisher Dockerfile
+FROM alpine:latest
+
+RUN apk add --no-cache socat
+
+CMD ["sh", "-c", "while true; do echo \"Hello from Publisher $(hostname) at $(date)\" | socat - TCP:listener:12345; sleep 1; done"]

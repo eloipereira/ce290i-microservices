@@ -1,0 +1,7 @@
+# Listener Dockerfile
+FROM alpine:latest
+RUN apk add --no-cache socat
+
+# Print received messages to a log file
+RUN mkdir shared
+CMD ["sh", "-c", "socat -u TCP-LISTEN:12345,reuseaddr,fork - >> /shared/messages.log"]
