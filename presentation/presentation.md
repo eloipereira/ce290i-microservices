@@ -7,7 +7,7 @@ backgroundColor: #fff
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 ---
 
-# Data-intensive applications using microservices
+# Microservices
 
 CE290I - Control and information management
 Systems Engineering, UC Berkeley
@@ -33,14 +33,14 @@ November 18, 2024
 [linkedin](https://linkedin.com/in/eloipereira)
 
 ---
-# Data-intensive applications
+<!-- # Data-intensive applications
 
 * Applications that process large volumes of data, typically in real time or near-real time
 * Examples: recommendation engines, fraud detection, real-time analytics, and scientific research.
 * Large heterogeneous stacks, comprised by different services developed by different teams, SW Eng, DE, DS, ML, etc.
 * Must meet hard requirements on scale, performance, and security
 * Microservices architectures have been widely adopted for data-intensive applications
----
+--- -->
 
 <span style="color:white">
 <h1> Why not Monoliths?!</h1>
@@ -226,7 +226,15 @@ networks:
 
 ---
 
-<!--
+
+# Client-service REST Microservices
+- REST (Representational State Transfer) is a set of architectural principles for designing networked applications based on HTTP
+- REST Microservices communicate with each other over HTTP, using HTTP methods (i.e., GET, POST, PUT, and DELETE)
+- They exchange data in a lightweight format such as JSON or XML
+---
+
+
+
  # A simple example - GPS Replay
 
 * Read a GPS sensor data from a csv file and replay it in real-time
@@ -248,13 +256,8 @@ networks:
 * Create a YAML file named `docker-compose-multi-replayer.yml` with three services, each one being an instance of `dockerfile.replayer_print`
 * Build and run your multi-container application using `docker compose build` and `docker compose up`
 ---
--->
 
-# Client-service REST Microservices
-- REST (Representational State Transfer) is a set of architectural principles for designing networked applications based on HTTP
-- REST Microservices communicate with each other over HTTP, using HTTP methods (i.e., GET, POST, PUT, and DELETE)
-- They exchange data in a lightweight format such as JSON or XML
----
+
 # REST-based GPS Replayer
 * Backend microservice
   * Real-time replayer
