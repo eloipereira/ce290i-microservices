@@ -4,13 +4,23 @@ import pandas as pd
 import requests
 import streamlit as st
 from fastapi.encoders import jsonable_encoder
+from gps_replay.models import GPS
 
 from app.config import Config
 from app.widgets import gps_state_plots
-from gps_replay.models import GPS
 
 
 def fetch_gps(session, url) -> GPS:
+    """
+    Fetch the current GPS state from the given URL using the provided session.
+
+    Args:
+    - session: A requests.Session() object
+    - url: The URL to retrieve the GPS state from
+
+    Returns:
+    - A GPS object containing the current GPS state
+    """
     try:
         result = session.get(url)
         return GPS(**result.json())
@@ -36,9 +46,7 @@ if "gps_samples" not in st.session_state:
 
 while True:
     with placeholder.container():
-        gps = fetch_gps(
-            session=session, url=f"http://{cfg.api_host}:{cfg.api_port}/gps_state"
-        )
+        gps = fetch_gps(session=session, url=f"http://{cfg.api_host}:{cfg.api_port}/gps_state")
         st.session_state.gps_samples.append(gps)
         df = pd.DataFrame(jsonable_encoder(st.session_state.gps_samples))
         gps_state_plots(df)

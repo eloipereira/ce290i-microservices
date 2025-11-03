@@ -4,11 +4,10 @@ import pandas as pd
 import redis
 import streamlit as st
 from fastapi.encoders import jsonable_encoder
-
-from app.widgets import gps_state_plots
 from gps_replay.config import RedisConfig
 from gps_replay.models import GPS
 
+from app.widgets import gps_state_plots
 
 cfg = RedisConfig()
 
@@ -21,6 +20,15 @@ if "gps_samples" not in st.session_state:
 
 
 def subscriber(topic: str, redis: redis.Redis):
+    """
+    Subscribe to a Redis Pub/Sub topic and receive messages.
+
+    When a message is received, it is added to the session state and the
+    GPS state plots are updated.
+
+    :param topic: The name of the Redis Pub/Sub topic to subscribe to.
+    :param redis: The Redis client object.
+    """
     pubsub = redis.pubsub()
     pubsub.subscribe(topic)
     while True:

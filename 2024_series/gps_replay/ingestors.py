@@ -17,5 +17,5 @@ def gps_generator_from_csv(csv_path: str) -> Generator[GPS, Any, Any]:
                     yield GPS(**line)
                 except ValidationError as error:
                     logging.error(msg=f"Data Validation Error: {error}")
-    except IOError as e:
+    except OSError as e:
         logging.error(msg=f"IO Error: {e}")

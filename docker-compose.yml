@@ -1,0 +1,49 @@
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - microservices
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  data-ingestion-simulator:
+    build:
+      context: ./data_ingestion_simulator
+      dockerfile: Dockerfile
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - microservices
+    environment:
+      - API_BASE_URL=http://api:8000
+      - SIMULATION_INTERVAL=0.1
+    restart: on-failure
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - microservices
+    environment:
+      - API_URL=http://api:8000/users/
+    restart: on-failure
+
+networks:
+  microservices:
+    driver: bridge

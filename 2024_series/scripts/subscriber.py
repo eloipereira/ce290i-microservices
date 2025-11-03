@@ -1,9 +1,7 @@
 import logging
 
 import redis
-
 from gps_replay.config import RedisConfig
-
 
 cfg = RedisConfig()
 

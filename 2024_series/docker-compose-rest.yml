@@ -1,12 +1,10 @@
-version: '3.3'
-
 services:
-  data_player:
+  replayer:
     build:
       context: .
       dockerfile: ./dockerfile.replayer
       args:
-        - SERVICE_TYPE=pubsub
+        - SERVICE_TYPE=cached
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -18,16 +16,28 @@ services:
     restart: always
     ports:
       - "6379:6379"
+  api:
+    build:
+      context: .
+      dockerfile: ./dockerfile.api
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - '8000:8000'
+    depends_on:
+      - replayer
+    restart: always
   app:
     build:
       context: .
       dockerfile: ./dockerfile.app
       args:
-        - DATA_SOURCE=pubsub
+        - DATA_SOURCE=rest
     ports:
       - '8501:8501'
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - API_HOST=api
+      - API_PORT=8000
     depends_on:
-      - data_player
+      - api
