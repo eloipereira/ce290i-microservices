@@ -1,45 +1,56 @@
-# Frontend - Streamlit App
+# User Age Distribution Frontend
 
-A simple Streamlit application that visualizes user age distribution from the API.
+A simple Streamlit web application that fetches user data from the User Management API and displays age distribution in a histogram.
 
 ## Features
 
-- **Fetch Users**: Button to get all users from the API
-- **Age Histogram**: Visual representation of user ages
-- **Statistics**: Shows total users, average age, youngest, and oldest
+- **Interactive Web Interface**: Simple button-driven UI
+- **Real-time Data Fetching**: Gets latest user data from API
+- **Age Distribution Visualization**: Histogram showing user age ranges
+- **Statistics Display**: Shows total users, average age, min/max ages
+- **Error Handling**: Graceful handling of API connection issues
 
-## Setup
+## Configuration
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Environment variables:
+- `API_URL`: Full URL to the users endpoint (default: `http://localhost:8000/users/`)
 
-2. Make sure the API is running on `http://localhost:8000`
+## Running the Service
 
-## Usage
-
-Run the Streamlit app:
+### Local Development
 ```bash
+# Create and activate a virtual environment
+python -m venv .venv
+
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the Streamlit app
 streamlit run app.py
 ```
 
-The app will be available at `http://localhost:8501`
-
-## Docker Usage
-
+### With Docker
 ```bash
 # Build the image
-docker build -t frontend-streamlit .
+docker build -t frontend-app .
 
 # Run the container
-docker run -p 8501:8501 frontend-streamlit
+docker run --name frontend0 -p 8501:8501 -e API_URL=http://localhost:8000/users/ frontend-app
 ```
 
-## How it Works
 
-1. Click "Get User Ages and Plot Histogram" button
-2. App calls `/users/` endpoint
-3. Extracts ages from all users
-4. Creates a histogram using matplotlib
-5. Displays statistics below the chart
+
+## Usage
+
+1. Open your browser to `http://localhost:8501`
+2. Click "Get User Ages and Plot Histogram"
+3. View the age distribution chart and statistics
+4. Refresh data by clicking the button again
+
+## Dependencies
+
+- `streamlit`: Web application framework
+- `requests`: HTTP client for API calls
+- `matplotlib`: Plotting library for histograms

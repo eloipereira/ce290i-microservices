@@ -26,7 +26,7 @@ services:
       - microservices
     environment:
       - API_BASE_URL=http://api:8000
-      - SIMULATION_INTERVAL=0.1
+      - SIMULATION_INTERVAL=5
     restart: on-failure
 
   frontend:
