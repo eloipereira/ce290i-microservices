@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - microservices
+      - private_network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 10s
@@ -23,7 +23,7 @@ services:
       api:
         condition: service_healthy
     networks:
-      - microservices
+      - private_network
     environment:
       - API_BASE_URL=http://api:8000
       - SIMULATION_INTERVAL=5
@@ -40,6 +40,7 @@ services:
         condition: service_healthy
     networks:
       - microservices
+      - private_network
     environment:
       - API_URL=http://api:8000/users/
     restart: on-failure
@@ -47,3 +48,6 @@ services:
 networks:
   microservices:
     driver: bridge
+  private_network:
+    driver: bridge
+    internal: true
